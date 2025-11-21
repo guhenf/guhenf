@@ -1,14 +1,14 @@
 name: Novo Artigo para o Blog
 description: Criar e publicar um novo conteúdo no site
-title: "[Blog]: "
-labels: ["rascunho"]
+title: '[Blog]: '
+labels: ['rascunho']
 body:
   - type: input
     id: title
     attributes:
       label: Título do Artigo
       description: O título principal que aparecerá no blog.
-      placeholder: Ex: Como usar GitHub Actions
+      placeholder: 'Ex: Como usar GitHub Actions'
     validations:
       required: true
 
@@ -24,7 +24,7 @@ body:
     id: slug
     attributes:
       label: Slug da URL
-      description: O endereço da URL (ex: como-usar-github-actions)
+      description: 'O endereço da URL (ex: como-usar-github-actions)'
       placeholder: meu-novo-post
     validations:
       required: true
