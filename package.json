@@ -27,6 +27,7 @@
     "globals": "^15.9.0",
     "postcss": "^8.4.44",
     "tailwindcss": "^3.4.10",
+    "typescript": "^5.9.3",
     "vite": "^5.4.1"
   },
   "homepage": "https://guhenf.github.io/guhenf"
