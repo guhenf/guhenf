@@ -1,0 +1,48 @@
+name: Publicar Post do Blog
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+
+jobs:
+  criar-arquivo-post:
+    if: github.event.label.name == 'publicar'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Ler dados da Issue (Parser)
+        id: issue_parser
+        uses: stefanbuck/github-issue-parser@v3
+        with:
+          template-path: .github/ISSUE_TEMPLATE/new-post.yml
+
+      - name: Criar arquivo Markdown do Post
+        run: |
+          mkdir -p _posts
+          DATE=$(date +%Y-%m-%d)
+          SLUG="${{ steps.issue_parser.outputs.issueparser_slug }}"
+          FILENAME="_posts/${DATE}-${SLUG}.md"
+
+          echo "---" > "$FILENAME"
+          echo "title: \"${{ steps.issue_parser.outputs.issueparser_title }}\"" >> "$FILENAME"
+          echo "date: $DATE" >> "$FILENAME"
+          echo "author: ${{ github.actor }}" >> "$FILENAME"
+          echo "summary: \"${{ steps.issue_parser.outputs.issueparser_summary }}\"" >> "$FILENAME"
+          echo "---" >> "$FILENAME"
+          echo "" >> "$FILENAME"
+          echo "${{ steps.issue_parser.outputs.issueparser_content }}" >> "$FILENAME"
+
+          echo "Arquivo criado: $FILENAME"
+
+      - name: Commit e Push do novo post
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add _posts/
+          git commit -m "Novo post: ${{ steps.issue_parser.outputs.issueparser_title }}"
+          git push
