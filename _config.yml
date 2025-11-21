@@ -1,0 +1,5 @@
+title: Blog do Gustavo
+description: Aprendendo automação com GitHub Actions
+theme: jekyll-theme-cayman
+plugins:
+  - jekyll-seo-tag
